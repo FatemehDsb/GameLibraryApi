@@ -3,6 +3,7 @@ package com.example.GameLibraryAPI.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name="games")
@@ -15,6 +16,11 @@ public class Game {
     private double rating;
     private int releaseYear;
 
+   @OneToOne
+   @JoinColumn(name="category_id")
+   private Category category;
+
+
     public Game(int releaseYear, double rating, String genre, String title) {
         this.releaseYear = releaseYear;
         this.rating = rating;
@@ -23,6 +29,22 @@ public class Game {
     }
 
     public Game() {
+    }
+
+    public Game(String title, String genre, double rating, int releaseYear, Category category) {
+        this.title = title;
+        this.genre = genre;
+        this.rating = rating;
+        this.releaseYear = releaseYear;
+        this.category = category;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public int getId() {

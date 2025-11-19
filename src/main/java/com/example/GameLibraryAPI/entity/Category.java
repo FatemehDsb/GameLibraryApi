@@ -2,6 +2,8 @@ package com.example.GameLibraryAPI.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name="categories")
 public class Category {
@@ -10,6 +12,9 @@ public class Category {
 private int categoryId;
 
 private String categoryName;
+
+@OneToMany(mappedBy = "category")
+List<Game> games;
 
     public Category() {
     }

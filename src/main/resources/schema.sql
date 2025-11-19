@@ -8,16 +8,17 @@ CREATE TABLE games(
  title VARCHAR(255),
  genre VARCHAR(255),
  rating DOUBLE,
- release_year INTEGER
+ release_year INTEGER,
+ category_id INTEGER,
+ FOREIGN KEY (category_id) REFERENCES categories(category_id);
  );
 
- CREATE TABLE reviews(
- id INTEGER AUTO_INCREMENT PRIMARY KEY,
- review_text VARCHAR(255)
- );
+
 
  CREATE TABLE categories(
  category_id INTEGER AUTO_INCREMENT PRIMARY KEY,
  category_name VARCHAR(255)
  );
+
+
 
