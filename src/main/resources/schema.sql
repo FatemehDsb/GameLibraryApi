@@ -1,0 +1,23 @@
+
+DROP TABLE IF EXISTS games;
+DROP TABLE IF EXISTS reviews;
+DROP TABLE IF EXISTS categories;
+
+CREATE TABLE games(
+ id INTEGER AUTO_INCREMENT PRIMARY KEY,
+ title VARCHAR(255),
+ genre VARCHAR(255),
+ rating DOUBLE,
+ release_year INTEGER
+ );
+
+ CREATE TABLE reviews(
+ id INTEGER AUTO_INCREMENT PRIMARY KEY,
+ review_text VARCHAR(255)
+ );
+
+ CREATE TABLE categories(
+ category_id INTEGER AUTO_INCREMENT PRIMARY KEY,
+ category_name VARCHAR(255)
+ );
+
