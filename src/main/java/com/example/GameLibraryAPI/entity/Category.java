@@ -13,7 +13,7 @@ private int categoryId;
 
 private String categoryName;
 
-@OneToMany(mappedBy = "category")
+@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
 List<Game> games;
 
     public Category() {

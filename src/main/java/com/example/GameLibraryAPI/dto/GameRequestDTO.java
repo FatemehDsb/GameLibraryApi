@@ -1,14 +1,13 @@
 package com.example.GameLibraryAPI.dto;
 
 import jakarta.validation.constraints.NotEmpty;
-import jdk.jfr.Category;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.example.GameLibraryAPI.entity.Category;
 
-import java.time.LocalDate;
+
 
 public class GameRequestDTO {
-    private String gameTitle;
     @NotEmpty
+    private String gameTitle;
     private String gameGenre;
     private double gameRating;
     private int releaseYear;
@@ -18,12 +17,34 @@ public class GameRequestDTO {
     public GameRequestDTO() {
     }
 
+    public GameRequestDTO(String gameTitle, String gameGenre, double gameRating, int releaseYear) {
+        this.gameTitle = gameTitle;
+        this.gameGenre = gameGenre;
+        this.gameRating = gameRating;
+        this.releaseYear = releaseYear;
+    }
+
     public GameRequestDTO(String gameGenre, double gameRating, int releaseYear) {
         this.gameGenre = gameGenre;
         this.gameRating = gameRating;
         this.releaseYear = releaseYear;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public String getGameTitle() {
+        return gameTitle;
+    }
+
+    public void setGameTitle(String gameTitle) {
+        this.gameTitle = gameTitle;
+    }
 
     public String getGameGenre() {
         return gameGenre;

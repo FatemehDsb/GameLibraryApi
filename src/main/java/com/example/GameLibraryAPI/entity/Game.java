@@ -11,24 +11,26 @@ public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String title;
     private String genre;
     private double rating;
     private int releaseYear;
 
-   @OneToOne
+   @ManyToOne
    @JoinColumn(name="category_id")
    private Category category;
 
 
-    public Game(int releaseYear, double rating, String genre, String title) {
-        this.releaseYear = releaseYear;
-        this.rating = rating;
-        this.genre = genre;
-        this.title = title;
-    }
 
     public Game() {
+    }
+
+    public Game(String title, String genre, double rating, int releaseYear) {
+        this.title = title;
+        this.genre = genre;
+        this.rating = rating;
+        this.releaseYear = releaseYear;
     }
 
     public Game(String title, String genre, double rating, int releaseYear, Category category) {

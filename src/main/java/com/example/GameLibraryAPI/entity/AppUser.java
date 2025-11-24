@@ -1,5 +1,6 @@
 package com.example.GameLibraryAPI.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -10,17 +11,25 @@ public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(unique = true)
     private String username;
+
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable( name= "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JsonManagedReference
     private Set<Role> roles;
 
     public AppUser() {
+    }
+
+    public AppUser(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public Long getId() {
