@@ -1,42 +1,22 @@
 package com.example.GameLibraryAPI.dto;
 
-import jakarta.validation.constraints.NotEmpty;
-import com.example.GameLibraryAPI.entity.Category;
-
+import jakarta.validation.constraints.*;
 
 
 public class GameRequestDTO {
-    @NotEmpty
+    @NotBlank
     private String gameTitle;
+    @NotBlank
     private String gameGenre;
+    @Min(1) @Max(10)
     private double gameRating;
+    @Min(1950)
     private int releaseYear;
 
-    private Category category;
 
     public GameRequestDTO() {
     }
 
-    public GameRequestDTO(String gameTitle, String gameGenre, double gameRating, int releaseYear) {
-        this.gameTitle = gameTitle;
-        this.gameGenre = gameGenre;
-        this.gameRating = gameRating;
-        this.releaseYear = releaseYear;
-    }
-
-    public GameRequestDTO(String gameGenre, double gameRating, int releaseYear) {
-        this.gameGenre = gameGenre;
-        this.gameRating = gameRating;
-        this.releaseYear = releaseYear;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
 
     public String getGameTitle() {
         return gameTitle;

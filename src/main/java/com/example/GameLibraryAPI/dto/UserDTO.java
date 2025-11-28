@@ -1,17 +1,20 @@
 package com.example.GameLibraryAPI.dto;
 
 import com.example.GameLibraryAPI.entity.Role;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.Set;
 
 public class UserDTO {
+    @NotBlank
     private String username;
+    @NotBlank
     private String password;
+    @NotBlank
     private Set<Role> roles;
 
 
-    public UserDTO() {
-    }
+
 
     public UserDTO(String username, Set<Role> roles) {
         this.username = username;
@@ -23,6 +26,7 @@ public class UserDTO {
         this.roles = roles;
         this.password = password;
     }
+
 
     public String getPassword() {
         return password;

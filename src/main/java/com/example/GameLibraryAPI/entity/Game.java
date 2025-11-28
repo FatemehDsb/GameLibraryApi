@@ -2,7 +2,6 @@ package com.example.GameLibraryAPI.entity;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -17,11 +16,8 @@ public class Game {
     private double rating;
     private int releaseYear;
 
-   @ManyToOne
-   @JoinColumn(name="category_id")
-   private Category category;
-
-
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL)
+    private List<Review> reviews;
 
     public Game() {
     }
@@ -31,22 +27,6 @@ public class Game {
         this.genre = genre;
         this.rating = rating;
         this.releaseYear = releaseYear;
-    }
-
-    public Game(String title, String genre, double rating, int releaseYear, Category category) {
-        this.title = title;
-        this.genre = genre;
-        this.rating = rating;
-        this.releaseYear = releaseYear;
-        this.category = category;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
     public int getId() {
@@ -87,5 +67,13 @@ public class Game {
 
     public void setReleaseYear(int  releaseYear) {
         this.releaseYear = releaseYear;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 }

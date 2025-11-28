@@ -1,8 +1,12 @@
-package com.example.GameLibraryAPI.entity;
+package com.example.GameLibraryAPI.dto;
+
+import jakarta.validation.constraints.NotBlank;
 
 public class LoginRequestDTO {
-    private String username;
-    private String password;
+    @NotBlank
+    String username;
+    @NotBlank
+     String password;
 
     public LoginRequestDTO() {
     }

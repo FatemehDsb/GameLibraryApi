@@ -5,6 +5,7 @@ import com.example.GameLibraryAPI.dto.GameResponseDTO;
 import com.example.GameLibraryAPI.dto.UserDTO;
 import com.example.GameLibraryAPI.service.GameService;
 import com.example.GameLibraryAPI.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,19 +28,42 @@ public class AdminController {
     }
 
     @GetMapping("/games")
-    public ResponseEntity<List<GameResponseDTO>> getAllGames() { return ResponseEntity.ok(gameService.getAll());}
+    public ResponseEntity<List<GameResponseDTO>> getAllGames()
+    { return ResponseEntity.ok(gameService.getAll());}
 
     @PostMapping("/games")
-    public ResponseEntity<GameResponseDTO> addGame(@RequestBody GameRequestDTO gameRequestDTO){
-        System.out.println("***REQUEST BODY");
+    public ResponseEntity<GameResponseDTO> addGame(@RequestBody @Valid GameRequestDTO gameRequestDTO){
         return ResponseEntity.ok(gameService.addGame(gameRequestDTO));
     }
 
     @PostMapping("/users")
-    public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userdto){
-        System.out.println("********* SAVE USER REQUEST*****");
+    public ResponseEntity<UserDTO> addUser(@RequestBody @Valid UserDTO userdto){
         return ResponseEntity.ok(userService.addUser(userdto));
     }
+
+    @GetMapping ("/users/{id}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id){
+        return ResponseEntity.ok(userService.getUserById(id));
+    }
+
+    @DeleteMapping("/users/{id}")
+    public String  deleteUserById (@PathVariable Long id){
+       userService.deleteUserById(id);
+       return "user is deleted!";
+    }
+
+    @PutMapping("/users/{id}")
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id,
+                                              @RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(userService.updateUser(id, userDTO));
+    }
+
+
+
+
+
+
+
 
 
 }

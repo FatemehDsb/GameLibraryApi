@@ -1,9 +1,12 @@
 package com.example.GameLibraryAPI.dto;
 
 
+import com.example.GameLibraryAPI.entity.Review;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+
+import java.util.List;
 
 public class GameResponseDTO {
     @NotBlank
@@ -15,9 +18,16 @@ public class GameResponseDTO {
     private double gameRating;
     @Min(1950)
     private int releaseYear;
+    private List<ReviewDTO> reviews;
 
-    public GameResponseDTO() {
+    public GameResponseDTO(String gameTitle, String gameGenre, double gameRating, int releaseYear, List<ReviewDTO> reviews) {
+        this.gameGenre = gameGenre;
+        this.gameRating = gameRating;
+        this.releaseYear = releaseYear;
+        this.gameTitle = gameTitle;
+        this.reviews = reviews;
     }
+
     public String getGameTitle() {
         return gameTitle;
     }
@@ -26,11 +36,11 @@ public class GameResponseDTO {
         this.gameTitle = gameTitle;
     }
 
-    public GameResponseDTO(String gameTitle,String gameGenre, double gameRating, int releaseYear) {
+    public GameResponseDTO(String gameTitle, String gameGenre, double gameRating, int releaseYear) {
+        this.gameTitle = gameTitle;
         this.gameGenre = gameGenre;
         this.gameRating = gameRating;
         this.releaseYear = releaseYear;
-        this.gameTitle = gameTitle;
     }
 
 
@@ -57,5 +67,13 @@ public class GameResponseDTO {
 
     public void setReleaseYear(int releaseYear) {
         this.releaseYear = releaseYear;
+    }
+
+    public List<ReviewDTO> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<ReviewDTO> reviews) {
+        this.reviews = reviews;
     }
 }

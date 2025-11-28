@@ -1,41 +1,48 @@
 package com.example.GameLibraryAPI.controller;
 
-import com.example.GameLibraryAPI.config.JwtUtil;
-import com.example.GameLibraryAPI.entity.LoginRequestDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.GameLibraryAPI.dto.LoginRequestDTO;
+import com.example.GameLibraryAPI.service.CustomUserDetailService;
+
+import com.example.GameLibraryAPI.service.JwtService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/public")
 public class AuthController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JwtUtil jwtUtil;
+    private final AuthenticationManager authenticationManager;
+    private final CustomUserDetailService customUserDetailService;
+    private final JwtService jwtService;
 
-    @PostMapping("/login")
-    public String login (@RequestBody LoginRequestDTO userDto){
 
-        System.out.println("*************" + userDto.getUsername() + userDto.getPassword());
-        Authentication auth = authenticationManager.authenticate(
+    public AuthController(AuthenticationManager authenticationManager, CustomUserDetailService customUserDetailService, JwtService jwtService) {
+        this.authenticationManager = authenticationManager;
+        this.customUserDetailService = customUserDetailService;
+        this.jwtService = jwtService;
+    }
+
+    @PostMapping("/auth/login")
+    public ResponseEntity<?> login (@RequestBody LoginRequestDTO loginRequestDTO){
+
+
+        Authentication authenticatedObject = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        userDto.getUsername(),
-                        userDto.getPassword()));
+                        loginRequestDTO.getUsername(),
+                        loginRequestDTO.getPassword()));
 
-        System.out.println("🟢 authentication object" + auth);
+        UserDetails userDetails =  (UserDetails) authenticatedObject.getPrincipal();
 
-        String role = auth.getAuthorities().iterator().next().getAuthority().replace("ROLE_", "");
+        String token = jwtService.generateToken(userDetails);
 
-        System.out.println("🟢 Generated Role: " + role);
-
-        return jwtUtil.generateToken(userDto.getUsername(), role);
+        return ResponseEntity.ok(token);
     }
 }
